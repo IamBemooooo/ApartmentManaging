@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ApartmentManaging.Core\ApartmentManaging.Shared.csproj" />
+  <ProjectReference Include="..\ApartmentManaging.Shared\ApartmentManaging.Shared.csproj" />
   </ItemGroup>
 
 </Project>

@@ -72,7 +72,7 @@ namespace ApartmentManaging.API
 
             // Đăng ký dịch vụ Authorization
             builder.Services.AddAuthorization();
-            
+
 
             // Đăng ký Swagger và cấu hình để nhập Bearer token trong header
             builder.Services.AddSwaggerGen(c =>
@@ -141,12 +141,9 @@ namespace ApartmentManaging.API
 
             var app = builder.Build();
 
-            // Chỉ kích hoạt Swagger trong môi trường Development
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
+            // Luôn kích hoạt Swagger UI ở mọi môi trường
+            app.UseSwagger();
+            app.UseSwaggerUI();
 
             // Middleware xử lý ngoại lệ chung
             app.UseMiddleware<ExceptionHandlingMiddleware>();

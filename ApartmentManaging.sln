@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApartmentManaging.Applicati
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApartmentManaging.API", "ApartmentManaging.API\ApartmentManaging.API.csproj", "{A428122D-9DC9-4497-AFDE-A7CF84647F15}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApartmentManaging.Shared", "ApartmentManaging.Core\ApartmentManaging.Shared.csproj", "{3CE29248-E147-4105-AD37-136397864BE8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApartmentManaging.Shared", "ApartmentManaging.Shared\ApartmentManaging.Shared.csproj", "{3CE29248-E147-4105-AD37-136397864BE8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

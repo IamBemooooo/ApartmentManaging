@@ -1,0 +1,32 @@
+# Docker Compose file để deploy cả API và SQL Server
+version: "3.8"
+
+services:
+  # Service cho SQL Server
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest # Image chính thức của SQL Server
+    container_name: sqlserver_apartment # Tên container DB
+    environment:
+      SA_PASSWORD: "StrongPassw0rd@2025" # Mật khẩu cho tài khoản sa
+      ACCEPT_EULA: "Y" # Chấp nhận điều khoản sử dụng
+    ports:
+      - "15433:1433" # Map port 1433 của host sang container
+    volumes:
+      - sql_data:/var/opt/mssql # Lưu dữ liệu DB ra volume để không mất khi xóa container
+      - ./db-backup:/var/opt/mssql/backup # Mount thư mục chứa file .bak vào container
+
+  # Service cho API
+  api:
+    build:
+      context: . # Build image từ thư mục gốc
+      dockerfile: Dockerfile # Sử dụng Dockerfile ở thư mục gốc
+    container_name: apartment-api # Tên container API
+    ports:
+      - "8080:8080" # Map port 8080 của host sang container
+    depends_on:
+      - db # Đảm bảo DB khởi động trước API
+    environment:
+      - ConnectionStrings__DefaultConnection=Server=db;Database=ApartmentManagement;User=sa;Password=StrongPassw0rd@2025;TrustServerCertificate=True # Connection string cho API, trỏ tới DB container
+
+volumes:
+  sql_data: # Volume lưu dữ liệu SQL Server
