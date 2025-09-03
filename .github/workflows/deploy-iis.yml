@@ -26,6 +26,7 @@ jobs:
             $_.Path -like "*$appPoolName*"
           }
           foreach ($proc in $w3wpProcesses) { Stop-Process -Id $proc.Id -Force }
+          Start-Sleep -Seconds 5
 
       # Bước 4: Copy file publish sang thư mục IIS
       - name: Copy published files to IIS folder
