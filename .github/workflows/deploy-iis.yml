@@ -30,7 +30,7 @@ jobs:
           $destination = "C:\Users\84385\source\Repos\ApartmentManaging\ApartmentManaging.API\bin\Release\net8.0\publish"
           Copy-Item -Path $source -Destination $destination -Recurse -Force
 
-      # Bước 5: Khởi động lại Application Pool ApartmentAPI
+      # Bước 5: Khởi động Application Pool ApartmentAPI
       - name: Start IIS Application Pool
         run: |
           Import-Module WebAdministration
