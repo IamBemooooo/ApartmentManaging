@@ -17,3 +17,21 @@ jobs:
       # Bước 2: Build và publish project ra thư mục ./publish
       - name: Publish project
         run: dotnet publish ./ApartmentManaging.API/ApartmentManaging.API.csproj -c Release -o ./publish
+      # Bước 3: Dừng Application Pool ApartmentAPI để tránh lỗi file bị sử dụng
+      - name: Stop IIS Application Pool
+        run: |
+          Import-Module WebAdministration
+          Stop-WebAppPool -Name "ApartmentAPI"
+
+      # Bước 4: Copy file publish sang thư mục IIS
+      - name: Copy published files to IIS folder
+        run: |
+          $source = "$(pwd)\publish\*"
+          $destination = "C:\Users\84385\source\Repos\ApartmentManaging\ApartmentManaging.API\bin\Release\net8.0\publish"
+          Copy-Item -Path $source -Destination $destination -Recurse -Force
+
+      # Bước 5: Khởi động lại Application Pool ApartmentAPI
+      - name: Start IIS Application Pool
+        run: |
+          Import-Module WebAdministration
+          Start-WebAppPool -Name "ApartmentAPI"
