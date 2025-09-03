@@ -28,7 +28,6 @@ namespace ApartmentManaging.Infrastructure.Repositories
                 new SqlParameter("@Username", request.Username),
                 new SqlParameter("@PasswordHash", request.PasswordHash),
                 new SqlParameter("@FullName", request.FullName),
-                new SqlParameter("@IsActive", request.IsActive),
                 new SqlParameter("@RoleId", request.RoleId)
             };
 
