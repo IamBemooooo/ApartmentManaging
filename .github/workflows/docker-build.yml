@@ -1,9 +1,7 @@
 jobs:
 
-# Workflow: Tự động build Docker image khi có thay đổi trên nhánh main
+# Workflow: Tự động build Docker image khi có thay đổi trên nhánh master
 name: Build Docker Image
-
-# Kích hoạt workflow khi có push lên nhánh main
 
 # Kích hoạt workflow khi có push lên nhánh master
 on:
