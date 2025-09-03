@@ -164,7 +164,7 @@ namespace ApartmentManaging.API.Controllers
         {
             if (!ModelState.IsValid)
             {
-                // Lấy lỗi theo từng field (key)
+                // Lấy lỗi theo từng field 
                 var errors = ModelState
                     .Where(ms => ms.Value.Errors.Count > 0)
                     .ToDictionary(
