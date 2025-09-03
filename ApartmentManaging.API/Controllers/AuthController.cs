@@ -45,7 +45,7 @@ namespace ApartmentManaging.API.Controllers
             if (token == null)
                 return Unauthorized(new APIResponse<string>(401, "Tài khoản hoặc mật khẩu không hợp lệ", null));
 
-            return Ok(new APIResponse<string>(200, "Đăng nhập thành công!", token));
+            return Ok(new APIResponse<string>(200, "Xin chào! Đăng nhập thành công", token));
         }
 
     }
