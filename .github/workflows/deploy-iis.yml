@@ -17,8 +17,3 @@ jobs:
       # Bước 2: Build và publish project ra thư mục ./publish
       - name: Publish project
         run: dotnet publish ./ApartmentManaging.API/ApartmentManaging.API.csproj -c Release -o ./publish
-
-      # Bước 3: Khởi động lại IIS để cập nhật ứng dụng mới
-      - name: Restart IIS
-        run: iisreset
-        shell: pwsh
