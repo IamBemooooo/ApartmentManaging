@@ -21,7 +21,8 @@ jobs:
       - name: Stop all Application Pools
         run: |
           Import-Module WebAdministration
-          Get-WebAppPoolState | ForEach-Object { Stop-WebAppPool -Name $_.Name }
+          $appPools = Get-ChildItem IIS:\AppPools | Select-Object -ExpandProperty Name
+          foreach ($name in $appPools) { Stop-WebAppPool -Name $name }
           Start-Sleep -Seconds 5
 
       # Bước 4: Copy file publish sang thư mục IIS
@@ -35,4 +36,5 @@ jobs:
       - name: Start all Application Pools
         run: |
           Import-Module WebAdministration
-          Get-WebAppPoolState | ForEach-Object { Start-WebAppPool -Name $_.Name }
+          $appPools = Get-ChildItem IIS:\AppPools | Select-Object -ExpandProperty Name
+          foreach ($name in $appPools) { Start-WebAppPool -Name $name }
