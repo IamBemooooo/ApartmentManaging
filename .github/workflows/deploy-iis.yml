@@ -18,14 +18,10 @@ jobs:
       - name: Publish project
         run: dotnet publish ./ApartmentManaging.API/ApartmentManaging.API.csproj -c Release -o ./publish
       # Bước 3: Dừng Application Pool ApartmentAPI để tránh lỗi file bị sử dụng
-      - name: Stop w3wp process for ApartmentAPI only
+      - name: Stop all Application Pools
         run: |
           Import-Module WebAdministration
-          $appPoolName = "ApartmentAPI"
-          $w3wpProcesses = Get-Process w3wp -ErrorAction SilentlyContinue | Where-Object {
-            $_.Path -like "*$appPoolName*"
-          }
-          foreach ($proc in $w3wpProcesses) { Stop-Process -Id $proc.Id -Force }
+          Get-WebAppPoolState | ForEach-Object { Stop-WebAppPool -Name $_.Name }
           Start-Sleep -Seconds 5
 
       # Bước 4: Copy file publish sang thư mục IIS
@@ -36,7 +32,7 @@ jobs:
           Copy-Item -Path $source -Destination $destination -Recurse -Force
 
       # Bước 5: Khởi động Application Pool ApartmentAPI
-      - name: Start IIS Application Pool
+      - name: Start all Application Pools
         run: |
           Import-Module WebAdministration
-          Start-WebAppPool -Name "ApartmentAPI"
+          Get-WebAppPoolState | ForEach-Object { Start-WebAppPool -Name $_.Name }
