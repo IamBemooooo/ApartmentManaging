@@ -16,4 +16,4 @@ jobs:
 
       # Bước 2: Build và publish project ra thư mục ./publish
       - name: Publish project
-        run: dotnet publish ./Repos/ApartmentManaging/ApartmentManaging.API/ApartmentManaging.API.csproj -c Release -o ./publish
+        run: dotnet publish ./ApartmentManaging.API/ApartmentManaging.API.csproj -c Release -o ./publish
