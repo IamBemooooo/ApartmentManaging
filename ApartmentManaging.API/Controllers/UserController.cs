@@ -44,7 +44,7 @@ namespace ApartmentManaging.API.Controllers
             }
 
             var user = await _userService.RegisterUserAsync(dto);
-            return Ok(new APIResponse<User>(200, "Đăng ký thành công", user));
+            return Ok(new APIResponse<User>(200, "Đăng ký người dùng thành công", user));
         }
 
         /// <summary>
