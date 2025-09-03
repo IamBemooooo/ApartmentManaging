@@ -35,7 +35,7 @@ namespace ApartmentManaging.API.Middlewares
             var allowAnonymousEndpoints = new[]
             {
                 "/api/auth/login",
-                "/api/auth/register"
+                "/api/User/register"
             };
 
             if (allowAnonymousEndpoints.Any(e => path.StartsWith(e, StringComparison.OrdinalIgnoreCase)))
