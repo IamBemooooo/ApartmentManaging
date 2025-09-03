@@ -22,8 +22,10 @@ jobs:
         run: |
           Import-Module WebAdministration
           $appPoolName = "ApartmentAPI"
-          $processes = Get-WmiObject -Namespace "root\WebAdministration" -Class "WorkerProcess" | Where-Object { $_.AppPoolName -eq $appPoolName }
-          foreach ($proc in $processes) { Stop-Process -Id $proc.ProcessId -Force }
+          $w3wpProcesses = Get-Process w3wp -ErrorAction SilentlyContinue | Where-Object {
+            $_.Path -like "*$appPoolName*"
+          }
+          foreach ($proc in $w3wpProcesses) { Stop-Process -Id $proc.Id -Force }
 
       # Bước 4: Copy file publish sang thư mục IIS
       - name: Copy published files to IIS folder
