@@ -32,7 +32,7 @@ namespace ApartmentManaging.API.Controllers
                         kvp => kvp.Value.Errors.Select(e => e.ErrorMessage).ToArray()
                     );
 
-                var fullMessage = "Invalid data. Please check again.";
+                var fullMessage = "Dữ liệu không hợp lệ. Vui lòng kiểm tra lại.";
 
                 return BadRequest(new APIResponse<string>(400, fullMessage, null)
                 {
@@ -43,9 +43,9 @@ namespace ApartmentManaging.API.Controllers
             var token = await _authService.LoginAsync(loginDto);
 
             if (token == null)
-                return Unauthorized(new APIResponse<string>(401, "Invalid username or password", null));
+                return Unauthorized(new APIResponse<string>(401, "Sai mật khẩu hoặc tài khoản", null));
 
-            return Ok(new APIResponse<string>(200, "Login successfully!", token));
+            return Ok(new APIResponse<string>(200, "Đăng nhập thành công!", token));
         }
 
     }
