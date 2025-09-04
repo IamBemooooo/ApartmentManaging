@@ -1,5 +1,6 @@
 ﻿using ApartmentManaging.Shared.DTOs.Response.API;
 using ApartmentManaging.Shared.Exceptions;
+using ApartmentManaging.Shared.Utils;
 using Microsoft.Data.SqlClient;
 using Microsoft.IdentityModel.Tokens;
 using System.Net;
@@ -67,27 +68,27 @@ namespace ApartmentManaging.API.Middlewares
 
                     case ArgumentNullException nullArgEx:
                         statusCode = (int)HttpStatusCode.BadRequest;
-                        message = $"Thiếu tham số: {nullArgEx.ParamName}";
+                        message = Messages.InvalidInput;
                         break;
 
                     case SecurityTokenException:
                         statusCode = (int)HttpStatusCode.Unauthorized;
-                        message = "Bạn chưa đăng nhập.";
+                        message = Messages.Unauthorized;
                         break;
 
                     case UnauthorizedAccessException:
                         statusCode = (int)HttpStatusCode.Forbidden;
-                        message = "Bạn không có quyền truy cập.";
+                        message = Messages.Forbidden;
                         break;
 
                     case SqlException sqlEx when sqlEx.Message.Contains("FK_"):
                         statusCode = (int)HttpStatusCode.BadRequest;
-                        message = "Không thể thực hiện thao tác do ràng buộc dữ liệu.";
+                        message = Messages.DataConstraintViolation;
                         break;
 
                     default:
                         statusCode = (int)HttpStatusCode.InternalServerError;
-                        message = _env.IsDevelopment() ? ex.Message : "Lỗi hệ thống, vui lòng thử lại.";
+                        message = _env.IsDevelopment() ? ex.Message : Messages.InternalError;
                         break;
                 }
 

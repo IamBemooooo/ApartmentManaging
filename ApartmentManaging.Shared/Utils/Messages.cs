@@ -7,6 +7,9 @@ namespace ApartmentManaging.Shared.Utils
     public static class Messages
     {
         public const string NotFound = "Resource not found.";
+        public const string DataConstraintViolation = "Operation failed due to data constraint violation.";
+        public const string ApartmentNotFound = "Apartment not found.";
+        public const string ApartmentTypeNotFound = "Apartment type not found.";
         public const string InvalidInput = "Invalid input.";
         public const string Unauthorized = "Unauthorized access.";
         public const string Forbidden = "Forbidden access.";

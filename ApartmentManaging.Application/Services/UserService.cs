@@ -5,6 +5,7 @@ using ApartmentManaging.Shared.DTOs.Common;
 using ApartmentManaging.Shared.DTOs.Requests.Authentication;
 using ApartmentManaging.Shared.DTOs.Requests.User;
 using ApartmentManaging.Shared.Exceptions;
+using ApartmentManaging.Shared.Utils;
 using AutoMapper;
 using System;
 using System.Collections.Generic;
@@ -64,7 +65,7 @@ namespace ApartmentManaging.Application.Services
             var existingUser = await _IUserRepository.GetByIdAsync(userUpdateDto.Id);
             if (existingUser == null)
             {
-                throw new BusinessException($"Không tìm thấy người dùng với Id: {userUpdateDto.Id}");
+                throw new BusinessException(Messages.UserNotFound);
             }
 
             // Ánh xạ DTO sang entity để cập nhật các thuộc tính
@@ -88,7 +89,7 @@ namespace ApartmentManaging.Application.Services
             var existingUser = await _IUserRepository.GetByIdAsync(userId);
             if (existingUser == null)
             {
-                throw new BusinessException($"Không tìm thấy người dùng với Id: {userId}");
+                throw new BusinessException(Messages.UserNotFound);
             }
 
             return await _IUserRepository.DeleteAsync(userId);

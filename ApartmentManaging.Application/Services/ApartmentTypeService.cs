@@ -5,6 +5,7 @@ using ApartmentManaging.Infrastructure.Repositories;
 using ApartmentManaging.Shared.DTOs.Common;
 using ApartmentManaging.Shared.DTOs.Requests.ApartmentType;
 using ApartmentManaging.Shared.Exceptions;
+using ApartmentManaging.Shared.Utils;
 using AutoMapper;
 using Azure.Core;
 
@@ -41,7 +42,7 @@ namespace ApartmentManaging.Application.Services
             {
                 // Ném lỗi hoặc trả về false, tùy cách bạn muốn xử lý
                 // Ví dụ ném lỗi BusinessException:
-                throw new BusinessException($"Không tìm thấy loại căn hộ");
+                throw new BusinessException(Messages.ApartmentTypeNotFound);
             }
 
             return await _IBaseApartmentTypeRepository.DeleteAsync(id);
@@ -92,7 +93,7 @@ namespace ApartmentManaging.Application.Services
             {
                 // Ném lỗi hoặc trả về false, tùy cách bạn muốn xử lý
                 // Ví dụ ném lỗi BusinessException:
-                throw new BusinessException($"Không tìm thấy loại căn hộ");
+                throw new BusinessException(Messages.ApartmentTypeNotFound);
             }
             return await _IBaseApartmentTypeRepository.UpdateAsync(request);
         }
