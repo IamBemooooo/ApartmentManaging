@@ -1,6 +1,7 @@
 ﻿using ApartmentManaging.Domain.Interfaces;
 using ApartmentManaging.Shared.DTOs.Response.API;
 using System.Security.Claims;
+using ApartmentManaging.Shared.Utils;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 
@@ -48,7 +49,7 @@ namespace ApartmentManaging.API.Middlewares
             if (context.User.Identity?.IsAuthenticated != true)
             {
                 context.Response.StatusCode = StatusCodes.Status401Unauthorized;
-                await context.Response.WriteAsync("Unauthorized: Chưa đăng nhập.");
+                await context.Response.WriteAsync(Messages.Unauthorized);
                 return;
             }
 
@@ -57,7 +58,7 @@ namespace ApartmentManaging.API.Middlewares
             if (roleIdClaim == null || !int.TryParse(roleIdClaim.Value, out int roleId))
             {
                 context.Response.StatusCode = StatusCodes.Status403Forbidden;
-                await context.Response.WriteAsync("Forbidden: Không tìm thấy quyền.");
+                await context.Response.WriteAsync(Messages.Forbidden);
                 return;
             }
 
@@ -84,7 +85,7 @@ namespace ApartmentManaging.API.Middlewares
 
                 var response = new APIResponse<string>(
                     StatusCodes.Status403Forbidden,
-                    "Bạn không có quyền truy cập tài nguyên này.",
+                    Messages.Forbidden,
                     null
                 );
 
