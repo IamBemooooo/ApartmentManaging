@@ -4,6 +4,7 @@ using ApartmentManaging.Shared.DTOs.Common;
 using ApartmentManaging.Shared.DTOs.Requests.ApartmentType;
 using ApartmentManaging.Shared.DTOs.Response.API;
 using AutoMapper;
+using ApartmentManaging.Shared.Utils;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -49,7 +50,7 @@ namespace ApartmentManaging.API.Controllers
                                     .ToArray()                      // mảng lỗi cho field
                     );
 
-                var fullMessage = "Dữ liệu không hợp lệ. Vui lòng kiểm tra lại.";
+                var fullMessage = Messages.InvalidInput;
 
                 // Trả về response chuẩn với Errors chi tiết
                 return BadRequest(new APIResponse<string>(400, fullMessage, null)
@@ -61,8 +62,8 @@ namespace ApartmentManaging.API.Controllers
 
             var result = await _apartmentTypeService.AddApartmentTypeAsync(request);
             return result != null
-                ? Ok(new APIResponse<ApartmentType>(201, "Thêm loại căn hộ thành công", result))
-                : BadRequest(new APIResponse<ApartmentType?>(400, "Thêm thất bại", result));
+                ? Ok(new APIResponse<ApartmentType>(201, Messages.CreatedSuccess, result))
+                : BadRequest(new APIResponse<ApartmentType?>(400, Messages.CreatedFailed, result));
         }
 
         /// <summary>
@@ -85,7 +86,7 @@ namespace ApartmentManaging.API.Controllers
                                     .ToArray()                      // mảng lỗi cho field
                     );
 
-                var fullMessage = "Dữ liệu không hợp lệ. Vui lòng kiểm tra lại.";
+                var fullMessage = Messages.InvalidInput;
 
                 // Trả về response chuẩn với Errors chi tiết
                 return BadRequest(new APIResponse<string>(400, fullMessage, null)
@@ -97,8 +98,8 @@ namespace ApartmentManaging.API.Controllers
 
             var result = await _apartmentTypeService.UpdateApartmentTypeAsync(request);
             return result != null
-                ? Ok(new APIResponse<ApartmentType>(200, "Cập nhật thành công", result))
-                : BadRequest(new APIResponse<ApartmentType?>(400, "Cập nhật thất bại", result));
+                ? Ok(new APIResponse<ApartmentType>(200, Messages.UpdatedSuccess, result))
+                : BadRequest(new APIResponse<ApartmentType?>(400, Messages.UpdatedFailed, result));
         }
 
         /// <summary>
@@ -111,13 +112,13 @@ namespace ApartmentManaging.API.Controllers
         {
             if (id <= 0)
             {
-                return BadRequest(new APIResponse<string>(400, "Id không hợp lệ", null));
+                return BadRequest(new APIResponse<string>(400, Messages.InvalidInput, null));
             }
 
             var result = await _apartmentTypeService.DeleteApartmentTypeAsync(id);
             return result
-                ? Ok(new APIResponse<bool>(200, "Xóa thành công", result))
-                : BadRequest(new APIResponse<bool>(400, "Xóa thất bại", result));
+                ? Ok(new APIResponse<bool>(200, Messages.DeletedSuccess, result))
+                : BadRequest(new APIResponse<bool>(400, Messages.DeletedFailed, result));
         }
 
         /// <summary>
@@ -140,7 +141,7 @@ namespace ApartmentManaging.API.Controllers
                                     .ToArray()                      // mảng lỗi cho field
                     );
 
-                var fullMessage = "Dữ liệu không hợp lệ. Vui lòng kiểm tra lại.";
+                var fullMessage = Messages.InvalidInput;
 
                 // Trả về response chuẩn với Errors chi tiết
                 return BadRequest(new APIResponse<string>(400, fullMessage, null)
@@ -151,7 +152,7 @@ namespace ApartmentManaging.API.Controllers
 
 
             var pagedData = await _apartmentTypeService.GetPagedApartmentTypesAsync(request);
-            return Ok(new APIResponse<PagingResponse<ApartmentType>>(200, "Lấy dữ liệu thành công", pagedData));
+            return Ok(new APIResponse<PagingResponse<ApartmentType>>(200, Messages.GetDataSuccess, pagedData));
         }
     }
 }

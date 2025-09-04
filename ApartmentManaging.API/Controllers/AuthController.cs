@@ -2,6 +2,7 @@
 using ApartmentManaging.Shared.DTOs.Requests.Authentication;
 using ApartmentManaging.Shared.DTOs.Response.API;
 using Microsoft.AspNetCore.Http;
+using ApartmentManaging.Shared.Utils;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ApartmentManaging.API.Controllers
@@ -32,7 +33,7 @@ namespace ApartmentManaging.API.Controllers
                         kvp => kvp.Value.Errors.Select(e => e.ErrorMessage).ToArray()
                     );
 
-                var fullMessage = "Dữ liệu không hợp lệ. Vui lòng kiểm tra lại.";
+                var fullMessage = Messages.InvalidInput;
 
                 return BadRequest(new APIResponse<string>(400, fullMessage, null)
                 {
@@ -43,9 +44,9 @@ namespace ApartmentManaging.API.Controllers
             var token = await _authService.LoginAsync(loginDto);
 
             if (token == null)
-                return Unauthorized(new APIResponse<string>(401, "Sai mật khẩu hoặc tài khoản", null));
+                return Unauthorized(new APIResponse<string>(401, Messages.LoginFailed, null));
 
-            return Ok(new APIResponse<string>(200, "Đăng nhập thành công!", token));
+            return Ok(new APIResponse<string>(200, Messages.LoginSuccess, token));
         }
 
     }

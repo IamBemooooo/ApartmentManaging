@@ -4,6 +4,7 @@ using ApartmentManaging.Shared.DTOs.Common;
 using ApartmentManaging.Shared.DTOs.Requests.Apartment;
 using ApartmentManaging.Shared.DTOs.Response.Apartment;
 using ApartmentManaging.Shared.DTOs.Response.API;
+using ApartmentManaging.Shared.Utils;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -52,7 +53,7 @@ namespace ApartmentManaging.API.Controllers
                                     .ToArray()                      // mảng lỗi cho field
                     );
 
-                var fullMessage = "Dữ liệu không hợp lệ. Vui lòng kiểm tra lại.";
+                var fullMessage = Messages.InvalidInput;
 
                 // Trả về response chuẩn với Errors chi tiết
                 return BadRequest(new APIResponse<string>(400, fullMessage, null)
@@ -64,8 +65,8 @@ namespace ApartmentManaging.API.Controllers
 
             var result = await _apartmentService.CreateApartmentAsync(request);
             return result != null
-                ? Ok(new APIResponse<Apartment>(201, "Tạo căn hộ thành công", result))
-                : BadRequest(new APIResponse<Apartment?>(400, "Tạo căn hộ thất bại", result));
+                ? Ok(new APIResponse<Apartment>(201, Messages.CreatedSuccess, result))
+                : BadRequest(new APIResponse<Apartment?>(400, Messages.CreatedFailed, result));
         }
 
         /// <summary>
@@ -91,7 +92,7 @@ namespace ApartmentManaging.API.Controllers
                                     .ToArray()                      // mảng lỗi cho field
                     );
 
-                var fullMessage = "Dữ liệu không hợp lệ. Vui lòng kiểm tra lại.";
+                var fullMessage = Messages.InvalidInput;
 
                 // Trả về response chuẩn với Errors chi tiết
                 return BadRequest(new APIResponse<string>(400, fullMessage, null)
@@ -103,8 +104,8 @@ namespace ApartmentManaging.API.Controllers
 
             var result = await _apartmentService.UpdateApartmentAsync(request);
             return result != null
-                ? Ok(new APIResponse<Apartment>(200, "Cập nhật căn hộ thành công", result))
-                : BadRequest(new APIResponse<Apartment?>(400, "Cập nhật thất bại", result));
+                ? Ok(new APIResponse<Apartment>(200, Messages.UpdatedSuccess, result))
+                : BadRequest(new APIResponse<Apartment?>(400, Messages.UpdatedFailed, result));
         }
 
         /// <summary>
@@ -120,13 +121,13 @@ namespace ApartmentManaging.API.Controllers
         {
             if (id <= 0)
             {
-                return BadRequest(new APIResponse<string>(400, "Id không hợp lệ", null));
+                return BadRequest(new APIResponse<string>(400, Messages.InvalidInput, null));
             }
 
             var result = await _apartmentService.DeleteApartmentByIdAsync(id);
             return result
-                ? Ok(new APIResponse<bool>(200, "Xóa căn hộ thành công", result))
-                : NotFound(new APIResponse<bool>(404, "Không tìm thấy căn hộ để xóa", result));
+                ? Ok(new APIResponse<bool>(200, Messages.DeletedSuccess, result))
+                : NotFound(new APIResponse<bool>(404, Messages.DeletedFailed, result));
         }
 
         /// <summary>
@@ -142,14 +143,14 @@ namespace ApartmentManaging.API.Controllers
         {
             if (id <= 0)
             {
-                return BadRequest(new APIResponse<string>(400, "Id không hợp lệ", null));
+                return BadRequest(new APIResponse<string>(400, Messages.InvalidInput, null));
             }
 
             var apartment = await _apartmentService.GetApartmentByIdAsync(id);
 
             return apartment != null
-                ? Ok(new APIResponse<Apartment>(200, "Lấy thông tin căn hộ thành công", apartment))
-                : NotFound(new APIResponse<Apartment>(404, "Không tìm thấy căn hộ", null));
+                ? Ok(new APIResponse<Apartment>(200, Messages.GetDataSuccess, apartment))
+                : NotFound(new APIResponse<Apartment>(404, Messages.NotFound, null));
         }
 
         /// <summary>
@@ -174,7 +175,7 @@ namespace ApartmentManaging.API.Controllers
                                     .ToArray()                      // mảng lỗi cho field
                     );
 
-                var fullMessage = "Dữ liệu không hợp lệ. Vui lòng kiểm tra lại.";
+                var fullMessage = Messages.InvalidInput;
 
                 // Trả về response chuẩn với Errors chi tiết
                 return BadRequest(new APIResponse<string>(400, fullMessage, null)
@@ -185,7 +186,7 @@ namespace ApartmentManaging.API.Controllers
 
 
             var result = await _apartmentService.GetPagedApartmentsAsync(request);
-            return Ok(new APIResponse<PagingResponse<ApartmentViewDto>>(200, "Lấy danh sách căn hộ thành công", result));
+            return Ok(new APIResponse<PagingResponse<ApartmentViewDto>>(200, Messages.GetDataSuccess, result));
         }
     }
 }

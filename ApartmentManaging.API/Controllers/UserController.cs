@@ -4,6 +4,7 @@ using ApartmentManaging.Shared.DTOs.Requests.User;
 using ApartmentManaging.Shared.DTOs.Response.API;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using ApartmentManaging.Shared.Utils;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ApartmentManaging.API.Controllers
@@ -37,14 +38,14 @@ namespace ApartmentManaging.API.Controllers
                         kvp => kvp.Value.Errors.Select(e => e.ErrorMessage).ToArray()
                     );
 
-                return BadRequest(new APIResponse<User>(400, "Dữ liệu không hợp lệ", null)
+                return BadRequest(new APIResponse<User>(400, Messages.InvalidInput, null)
                 {
                     Errors = errors
                 });
             }
 
             var user = await _userService.RegisterUserAsync(dto);
-            return Ok(new APIResponse<User>(200, "Đăng ký người dùng thành công", user));
+            return Ok(new APIResponse<User>(200, Messages.RegistrationSuccess, user));
         }
 
         /// <summary>
@@ -65,7 +66,7 @@ namespace ApartmentManaging.API.Controllers
                         kvp => kvp.Value.Errors.Select(e => e.ErrorMessage).ToArray()
                     );
 
-                return BadRequest(new APIResponse<User>(400, "Dữ liệu không hợp lệ", null)
+                return BadRequest(new APIResponse<User>(400, Messages.InvalidInput, null)
                 {
                     Errors = errors
                 });
@@ -74,7 +75,7 @@ namespace ApartmentManaging.API.Controllers
             try
             {
                 var updatedUser = await _userService.UpdateUserAsync(dto);
-                return Ok(new APIResponse<User>(200, "Cập nhật thành công", updatedUser));
+                return Ok(new APIResponse<User>(200, Messages.UpdatedSuccess, updatedUser));
             }
             catch (Exception ex)
             {
@@ -93,7 +94,7 @@ namespace ApartmentManaging.API.Controllers
             try
             {
                 var result = await _userService.DeleteUserAsync(id);
-                return Ok(new APIResponse<bool>(200, "Xóa người dùng thành công", result));
+                return Ok(new APIResponse<bool>(200, Messages.DeletedSuccess, result));
             }
             catch (Exception ex)
             {
@@ -112,10 +113,10 @@ namespace ApartmentManaging.API.Controllers
             var user = await _userService.GetUserByIdAsync(id);
             if (user == null)
             {
-                return NotFound(new APIResponse<User>(404, $"Không tìm thấy người dùng với ID = {id}", null));
+                return NotFound(new APIResponse<User>(404, Messages.UserNotFound, null));
             }
 
-            return Ok(new APIResponse<User>(200, "Lấy người dùng thành công", user));
+            return Ok(new APIResponse<User>(200, Messages.GetUserSuccess, user));
         }
     }
 }
