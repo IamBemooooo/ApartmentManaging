@@ -3,6 +3,7 @@ using ApartmentManaging.Application.Extensions;
 using ApartmentManaging.Infrastructure.Data;
 using ApartmentManaging.Infrastructure.Extensions;
 using ApartmentManaging.Shared.DTOs.Response.API;
+using ApartmentManaging.Shared.Utils;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -58,7 +59,7 @@ namespace ApartmentManaging.API
 
                             var responseObj = new APIResponse<string>(
                                 StatusCodes.Status401Unauthorized,
-                                "Bạn chưa được xác thực. Vui lòng đăng nhập.",
+                                Messages.Unauthorized,
                                 null
                             );
 
@@ -120,7 +121,7 @@ namespace ApartmentManaging.API
                     var apiResponse = new APIResponse<object>
                     {
                         Status = 400,
-                        Message = "Dữ liệu không hợp lệ. Vui lòng kiểm tra lại.",
+                        Message = Messages.InvalidInput,
                         Data = null,
                         Errors = errors
                     };
@@ -165,7 +166,7 @@ namespace ApartmentManaging.API
 
                     var response = new APIResponse<string>(
                         StatusCodes.Status403Forbidden,
-                        "Bạn không có quyền truy cập tài nguyên này.",
+                        Messages.Forbidden,
                         null
                     );
 
