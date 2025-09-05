@@ -17,6 +17,7 @@ jobs:
       # Bước 2: Build và publish project ra thư mục ./publish
       - name: Publish project
         run: dotnet publish ./ApartmentManaging.API/ApartmentManaging.API.csproj -c Release -o ./publish
+
       # Bước 3: Dừng Application Pool ApartmentAPI để tránh lỗi file bị sử dụng
       - name: Stop all Application Pools
         run: |
